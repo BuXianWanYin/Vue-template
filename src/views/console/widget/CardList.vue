@@ -1,6 +1,6 @@
 <template>
   <ul class="card-list" :style="{ marginTop: showWorkTab ? '0' : '10px' }">
-    <li class="art-custom-card" v-for="(item, index) in dataList" :key="index">
+    <li class="art-custom-card" v-for="(item, index) in cardList" :key="index">
       <span class="des subtitle">{{ item.label }}</span>
       <MoCountTo class="number box-title" :num="item.value" :duration="800" :separator="2" />
       <div class="change-box">
@@ -20,11 +20,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useSettingStore } from '@/store/modules/setting'
-import type { ConsoleTotalInfo } from '@/types/agriculture/console'
 
-const props = defineProps({
-  dataList: { type: Array<ConsoleTotalInfo>, default: () => [] }
-})
+
 
 const settingStore = useSettingStore()
 const showWorkTab = computed(() => settingStore.showWorkTab)

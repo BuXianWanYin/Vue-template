@@ -52,24 +52,75 @@ watch(currentGlopTheme, () => {
 useCommon().scrollToTop()
 
 // 卡片数据
-const cardList = ref<ConsoleTotalInfo[]>([])
+const cardList = ref<ConsoleTotalInfo[]>([
+  {
+    label: '罗非鱼存量',
+    value: 1530,
+    change: '+5%',
+    icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#409EFF"></circle></svg>',
+    class: 'bg-primary',
+    color: '#409EFF'
+  },
+  {
+    label: '南美白对虾产量',
+    value: 1220,
+    change: '-2%',
+    icon: '<svg viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" fill="#E6A23C"></rect></svg>',
+    class: 'bg-warning',
+    color: '#E6A23C'
+  },
+  {
+    label: '加州鲈鱼产值',
+    value: 2048,
+    change: '+10%',
+    icon: '<svg viewBox="0 0 24 24"><polygon points="12,2 22,22 2,22" fill="#67C23A"></polygon></svg>',
+    class: 'bg-success',
+    color: '#67C23A'
+  },
+  {
+    label: '蔬菜作物产量',
+    value: 3350,
+    change: '+8%',
+    icon: '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="6" fill="#F56C6C"></ellipse></svg>',
+    class: 'bg-error',
+    color: '#F56C6C'
+  }
+])
 // 统计数据
-const countList = ref<ConsoleTotalInfo[]>([])
-
-const getCardList = async () => {
-  const res = await AgricultureConsoleService.listAgriculture()
-  cardList.value = res.data
-}
-
-const getCountList = async () => {
-  const res = await AgricultureConsoleService.listBatchTask()
-  countList.value = res.data
-}
-
-event.on('message', (data: ConsoleToTalData) => {
-  cardList.value = data.agriculture
-  countList.value = data.batchTask
-})
+const countList = ref<ConsoleTotalInfo[]>([
+  {
+    label: '今日任务',
+    value: 12,
+    change: '+1',
+    icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#409EFF"></circle></svg>',
+    class: 'bg-primary',
+    color: '#409EFF'
+  },
+  {
+    label: '已完成',
+    value: 9,
+    change: '+1',
+    icon: '<svg viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" fill="#67C23A"></rect></svg>',
+    class: 'bg-success',
+    color: '#67C23A'
+  },
+  {
+    label: '进行中',
+    value: 2,
+    change: '0',
+    icon: '<svg viewBox="0 0 24 24"><polygon points="12,2 22,22 2,22" fill="#E6A23C"></polygon></svg>',
+    class: 'bg-warning',
+    color: '#E6A23C'
+  },
+  {
+    label: '异常',
+    value: 1,
+    change: '+1',
+    icon: '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="6" fill="#F56C6C"></ellipse></svg>',
+    class: 'bg-error',
+    color: '#F56C6C'
+  }
+])
 
 const mockData = {
   week: {
@@ -105,10 +156,26 @@ const envTableData = [
   { type: '蔬菜', pond: '二区', temp: 29.7, humidity: 70, lux: 14800, ph: 6.7, waterTemp: '', oxygen: '', ammonia: '', nitrite: '', time: '2025-02-27 09:00' }
 ]
 
-onMounted(() => {
-  getCardList()
-  getCountList()
-})
+// 移除 API 调用和事件监听
+// const getCardList = async () => {
+//   const res = await AgricultureConsoleService.listAgriculture()
+//   cardList.value = res.data
+// }
+//
+// const getCountList = async () => {
+//   const res = await AgricultureConsoleService.listBatchTask()
+//   countList.value = res.data
+// }
+//
+// event.on('message', (data: ConsoleToTalData) => {
+//   cardList.value = data.agriculture
+//   countList.value = data.batchTask
+// })
+//
+// onMounted(() => {
+//   getCardList()
+//   getCountList()
+// })
 </script>
 
 <style lang="scss" scoped>

@@ -9,7 +9,6 @@ import { useUserStore } from './store/modules/user'
 import zh from 'element-plus/es/locale/lang/zh-cn'
 import en from 'element-plus/es/locale/lang/en'
 import { initState, saveUserData } from './utils/storage'
-import event from '@/utils/event'
 const userStore = useUserStore()
 const language = computed(() => userStore.language)
 const elSize = computed(() => (document.body.clientWidth >= 500 ? 'large' : 'default'))
@@ -31,40 +30,9 @@ const setBodyClass = (addClass: boolean) => {
     }, 300)
   }
 }
-// 初始化mq WebSocket连接
-import { useWebSocketStore } from '@/store/modules/websocket'
-import { WebSocketKey } from '@/enums/agricultureEnum'
-const wsStore = useWebSocketStore()
-const mqWebSocket = () => {
-  const { info } = useUserStore()
-  wsStore.initWebSocket(
-    WebSocketKey.MQ,
-    `${import.meta.env.VITE_WS_BASE_URL}/${WebSocketKey.MQ}/${info.name}`
-  )
-}
-
-const initEvent = () => {
-  event.connect()
-}
-
-const closeEvent = () =>{
-  event.disconnect()
-}
 
 onBeforeMount(() => {
   setBodyClass(true)
 })
 
-onMounted(() => {
-  initState()
-  saveUserData()
-  setBodyClass(false)
-  mqWebSocket()
-  initEvent()
-})
-
-onBeforeUnmount(() => {
-  wsStore.closeWebSocket(WebSocketKey.MQ)
-  closeEvent()
-})
 </script>
